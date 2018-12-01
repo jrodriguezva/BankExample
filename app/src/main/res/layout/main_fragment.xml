@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.jrodiriguezva.bankexample.utils.DateExtensionKt" />
+
+        <variable
+            name="viewModel"
+            type="com.jrodiriguezva.bankexample.presentation.ui.main.MainViewModel" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/firstTrans"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.ui.main.MainFragment">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/firstCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/viewStatus"
+                android:layout_width="20dp"
+                android:layout_height="0dp"
+                android:background="@{viewModel.bankTransactionViewFirst.total > 0?@color/green:@color/red}"
+                app:layout_constraintBottom_toBottomOf="@+id/transferDetail"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/transferTotalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:text="@string/total"
+                android:textSize="@dimen/text_large"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/viewStatus"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/transferTotal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:text="@{@string/price_format(viewModel.bankTransactionViewFirst.total)}"
+                android:textSize="@dimen/text_large"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/transferTotalText"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/transferDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{DateExtensionKt.toSimpleString(viewModel.bankTransactionViewFirst.date)}"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintEnd_toEndOf="@+id/transferTotal"
+                app:layout_constraintStart_toStartOf="@+id/transferTotalText"
+                app:layout_constraintTop_toBottomOf="@+id/transferTotal" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/transferDetailText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/description"
+                android:textSize="@dimen/text_normal"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/transferTotal"
+                app:layout_constraintStart_toStartOf="@+id/transferTotalText"
+                app:layout_constraintTop_toBottomOf="@+id/transferDate" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/transferDetail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:paddingBottom="@dimen/spacing_normal"
+                android:text="@{viewModel.bankTransactionViewFirst.description}"
+                app:layout_constraintEnd_toEndOf="@+id/transferTotal"
+                app:layout_constraintStart_toStartOf="@+id/transferTotalText"
+                app:layout_constraintTop_toBottomOf="@+id/transferDetailText" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:data="@{viewModel.bankTransactionView}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/firstCard" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

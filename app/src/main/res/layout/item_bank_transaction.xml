@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.jrodiriguezva.bankexample.utils.DateExtensionKt" />
+        <variable
+            name="bankTransaction"
+            type="com.jrodiriguezva.bankexample.presentation.ui.main.BankTransactionView" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/feedCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/viewStatus"
+                android:layout_width="20dp"
+                android:layout_height="0dp"
+                android:background="@{bankTransaction.total > 0?@color/green:@color/red}"
+                app:layout_constraintBottom_toBottomOf="@+id/transferDetail"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/transferTotalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:text="@string/total"
+                android:textSize="@dimen/text_large"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/viewStatus"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/transferTotal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_large"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:text="@{@string/price_format(bankTransaction.total)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/transferTotalText"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/transferDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{DateExtensionKt.toSimpleString(bankTransaction.date)}"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintEnd_toEndOf="@+id/transferTotal"
+                app:layout_constraintStart_toStartOf="@+id/transferTotalText"
+                app:layout_constraintTop_toBottomOf="@+id/transferTotal" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/transferDetailText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/description"
+                android:textSize="@dimen/text_normal"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/transferTotal"
+                app:layout_constraintStart_toStartOf="@+id/transferTotalText"
+                app:layout_constraintTop_toBottomOf="@+id/transferDate"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/transferDetail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:paddingBottom="@dimen/spacing_normal"
+                android:text="@{bankTransaction.description}"
+                app:layout_constraintEnd_toEndOf="@+id/transferTotal"
+                app:layout_constraintStart_toStartOf="@+id/transferTotalText"
+                app:layout_constraintTop_toBottomOf="@+id/transferDetailText" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
